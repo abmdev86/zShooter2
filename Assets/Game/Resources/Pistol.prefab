@@ -121,7 +121,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5947752320857938292}
-  - component: {fileID: 5945283270728065519}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Weapon
@@ -145,26 +144,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5945283270728065519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5945283270728065488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4154a3f71b13426428eaa1447ba9b761, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 25
-  damage: 50
-  muzzlePoint: {fileID: 973149737901499585}
-  muzzleFlash: {fileID: 4056365852719458292}
-  ammoCount: 15
-  magSize: 15
-  magCount: 10
-  reloadSpeed: 1.5
 --- !u!1001 &6978382165745371334
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -225,10 +204,5 @@ PrefabInstance:
 --- !u!4 &4056365852737807030 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6382492217861909104, guid: eb3d8004fc7c3fb4aa8548b47e32e673, type: 3}
-  m_PrefabInstance: {fileID: 6978382165745371334}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &4056365852719458292 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6382492217846705970, guid: eb3d8004fc7c3fb4aa8548b47e32e673, type: 3}
   m_PrefabInstance: {fileID: 6978382165745371334}
   m_PrefabAsset: {fileID: 0}

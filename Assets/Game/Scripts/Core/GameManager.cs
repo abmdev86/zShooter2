@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
   [SerializeField] GameObject playerSpawnLocation;
   [SerializeField] GameObject enemySpawnLocation;
   [SerializeField] Text ammoCountText;
-  
+
+
 
 
   GameObject player;
@@ -37,11 +38,13 @@ public class GameManager : MonoBehaviour
 
   private void Awake()
   {
+
     spawner = Resources.Load("spawner", typeof(Spawner)) as Spawner;
     player = Resources.Load("player", typeof(GameObject)) as GameObject;
     IsPlayerAlive = true;
 
   }
+
   private void Start()
   {
     if (spawner != null)
@@ -53,12 +56,12 @@ public class GameManager : MonoBehaviour
 
   private void Update()
   {
-    print(GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon>().AmmoCount);
+//    print(GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon>().AmmoCount);
     if (isGameRunning)
     {
-      print("spawner is not null");
+
       spawner.Spawn(1, 5f, enemySpawnLocation, gameObject);
-      ammoCountText.text = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon>().AmmoCount.ToString();
+    //  ammoCountText.text = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon>().AmmoCount.ToString();
     }
     print("Player alive: " + IsPlayerAlive);
     print("Game running: " + isGameRunning);

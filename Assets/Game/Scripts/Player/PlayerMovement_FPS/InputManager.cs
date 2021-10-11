@@ -6,6 +6,7 @@ public class InputManager : MonoBehaviour
   [SerializeField] Movement movement;
   [SerializeField] MouseLook mouseLook;
   [SerializeField] Weapon weapon;
+  WeaponManager weaponManager;
 
   PlayerControls controls;
   PlayerControls.GroundMovementActions groundMovement;
@@ -13,6 +14,7 @@ public class InputManager : MonoBehaviour
   Vector2 mouseInput;
   private void Awake()
   {
+    weaponManager = GetComponent<WeaponManager>();
     controls = new PlayerControls();
     groundMovement = controls.GroundMovement;
     // groundMovement.[action].performed += context => do something.
@@ -22,8 +24,9 @@ public class InputManager : MonoBehaviour
     groundMovement.MouseX.performed += ctx => mouseInput.x = ctx.ReadValue<float>();
 
     groundMovement.MouseY.performed += ctx => mouseInput.y = ctx.ReadValue<float>();
-    groundMovement.Shoot.performed += _ => weapon.Shoot();
-
+    groundMovement.Shoot.performed += _ => weaponManager.Attack();
+    //groundMovement.Shoot.performed += _ => weapon.Shoot();
+    // if (gameManager != null) print("GameManager found!");
   }
   private void Update()
   {

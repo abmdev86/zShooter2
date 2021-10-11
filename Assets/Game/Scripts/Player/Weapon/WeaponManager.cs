@@ -4,15 +4,97 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+  [SerializeField] int secondaryAmmo;
+  [SerializeField] int primaryAmmo;
+  [SerializeField] List<SOWeapon> weaponInventory;
+  [SerializeField] Camera fpsCam;
+  SOWeapon primarySlot1 = null;
+  SOWeapon primarySlot2 = null;
+  SOWeapon secondarySlot1 = null;
+  SOWeapon currentWeapon = null;
+
+
+  private void Awake()
+  {
+    weaponInventory = new List<SOWeapon>();
+    fpsCam = GetComponentInChildren<Camera>();
+
+  }
+
+  public void AddWeaponToInventory(SOWeapon weapon)
+  {
+    weaponInventory.Add(weapon);
+  }
+
+  public bool EquipWeapon(SOWeapon weapon)
+  {
+    bool equipped = false;
+
+    switch (weapon.WeaponType)
     {
-        
+      case WeaponType.Primary:
+        equipped = EquipPrimary(weapon);
+
+        break;
+      case WeaponType.Secondary:
+        EquipSecondary(weapon);
+        equipped = true;
+        break;
     }
 
-    // Update is called once per frame
-    void Update()
+    return equipped;
+  }
+
+  public void Attack()
+  {
+    Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+    RaycastHit hit;
+    if (Physics.Raycast(ray, out hit))
     {
-        
+      print("Im shooting at " + hit.transform.name);
     }
+
+  }
+
+  bool EquipPrimary(SOWeapon weapon)
+  {
+    if (primarySlot1 == null)
+    {
+      primarySlot1 = weapon;
+      return true;
+    }
+    else if (primarySlot2 == null)
+    {
+      primarySlot2 = weapon;
+      return true;
+    }
+    else
+    {
+      print("All slots full!");
+      return false;
+    }
+
+  }
+
+  void EquipSecondary(SOWeapon weapon)
+  {
+    SOWeapon currentWeapon = secondarySlot1;
+
+    if (currentWeapon == null)
+    {
+      weaponInventory.Remove(weapon);
+      secondarySlot1 = weapon;
+
+    }
+    else
+    {
+      weaponInventory.Add(currentWeapon);
+      weaponInventory.Remove(weapon);
+      secondarySlot1 = weapon;
+      print("secondary slot full");
+
+    }
+  }
+
+
 }
