@@ -15,5 +15,4 @@ public class WeaponPickUp : MonoBehaviour
       Destroy(gameObject);
     }
   }
-
 }
