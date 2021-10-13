@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc88d149726a194b80692ef0f72ea67, type: 3}
   m_Name: Assualt Rifle
   m_EditorClassIdentifier: 
-  WeaponName: Empty
-  Range: 0
-  Damage: 0
-  ClipSize: 15
+  WeaponName: Assualt Rifle
+  Range: 150
+  Damage: 100
+  ClipSize: 30
   CoolDown: 1.5
   ReloadSpeed: 1.5
   WeaponType: 0
-  WeaponModel: {fileID: 0}
+  WeaponModel: {fileID: 100000, guid: 7350c439920074a58a63ca710c013777, type: 3}
   UseFx: {fileID: 0}
