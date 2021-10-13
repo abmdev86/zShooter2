@@ -9,9 +9,9 @@ public class WeaponManager : MonoBehaviour
   [SerializeField] List<SOWeapon> weaponInventory;
   [SerializeField] Camera fpsCam;
   [SerializeField] SOWeapon primarySlot1 = null;
-  SOWeapon primarySlot2 = null;
+  [SerializeField] SOWeapon primarySlot2 = null;
   [SerializeField] SOWeapon secondarySlot1 = null;
-  SOWeapon currentWeapon = null;
+  [SerializeField] SOWeapon currentWeapon = null;
 
 
   private void Awake()
@@ -27,7 +27,7 @@ public class WeaponManager : MonoBehaviour
   public void AddWeaponToInventory(SOWeapon weapon)
   {
     weaponInventory.Add(weapon);
-    if (weapon.WeaponType == WeaponType.Primary && primarySlot1 == null)
+    if (weapon.WeaponType == WeaponType.Primary)
     {
       EquipPrimary(weapon);
     }
@@ -35,9 +35,7 @@ public class WeaponManager : MonoBehaviour
     {
       EquipSecondary(weapon);
     }
-    print("The list has " + weaponInventory[0]);
-    if (primarySlot1 == null) print("Primary is null");
-    // print("Added weapon " + primarySlot1.name);
+
   }
 
   public bool EquipWeapon(SOWeapon weapon)
@@ -72,6 +70,7 @@ public class WeaponManager : MonoBehaviour
 
   bool EquipPrimary(SOWeapon weapon)
   {
+    weaponInventory.Remove(weapon);
     if (primarySlot1 == null)
     {
       primarySlot1 = weapon;
@@ -81,35 +80,73 @@ public class WeaponManager : MonoBehaviour
     else if (primarySlot2 == null)
     {
       primarySlot2 = weapon;
+      print("Equipped to slot 2");
+
       return true;
     }
     else
     {
       print("All slots full!");
+      weaponInventory.Add(weapon);
       return false;
     }
 
   }
-
   void EquipSecondary(SOWeapon weapon)
   {
-    SOWeapon currentWeapon = secondarySlot1;
+    // remove weapon to equip from inventory
+    weaponInventory.Remove(weapon);
 
-    if (currentWeapon == null)
+    if (secondarySlot1 != null)
     {
-      weaponInventory.Remove(weapon);
+      // add what weapon is currently in slot
+      weaponInventory.Add(secondarySlot1);
+      // swap the weapon out
       secondarySlot1 = weapon;
+
 
     }
     else
     {
-      weaponInventory.Add(currentWeapon);
-      weaponInventory.Remove(weapon);
+      // add it to secondary slot
       secondarySlot1 = weapon;
-      print("secondary slot full");
-
     }
   }
+
+  public void UsePrimary()
+  {
+    if (primarySlot1 == null)
+    {
+      print("Nothing in primary slot!");
+      return;
+    }
+
+    currentWeapon = primarySlot1;
+    print(currentWeapon.name + " is equipped");
+
+  }
+  public void UseSecondary()
+  {
+    if (secondarySlot1 == null)
+    {
+      print("No secondary equipped!");
+      return;
+    }
+    else
+    {
+      if (currentWeapon != null)
+      {
+        AddWeaponToInventory(currentWeapon);
+        currentWeapon = null;
+        UseSecondary();
+      }
+      currentWeapon = secondarySlot1;
+      secondarySlot1 = null;
+      print("Using " + currentWeapon.name);
+    }
+  }
+
+
 
 
 }
