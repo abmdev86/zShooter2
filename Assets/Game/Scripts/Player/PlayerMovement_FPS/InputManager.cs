@@ -20,13 +20,14 @@ public class InputManager : MonoBehaviour
     // groundMovement.[action].performed += context => do something.
     groundMovement.HorizontalMovement.performed += ctx => horizontalInput = ctx.ReadValue<Vector2>();
     groundMovement.Jump.performed += _ => movement.OnJumpPress();
+    groundMovement.WeaponSlot1.performed += _ => weaponManager.UsePrimary();
+    groundMovement.WeaponSlot3.performed += _ => weaponManager.UseSecondary();
 
     groundMovement.MouseX.performed += ctx => mouseInput.x = ctx.ReadValue<float>();
 
     groundMovement.MouseY.performed += ctx => mouseInput.y = ctx.ReadValue<float>();
     groundMovement.Shoot.performed += _ => weaponManager.Attack();
-    //groundMovement.Shoot.performed += _ => weapon.Shoot();
-    // if (gameManager != null) print("GameManager found!");
+
   }
   private void Update()
   {
