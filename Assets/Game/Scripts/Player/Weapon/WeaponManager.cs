@@ -12,6 +12,10 @@ public class WeaponManager : MonoBehaviour
   [SerializeField] SOWeapon primarySlot2 = null;
   [SerializeField] SOWeapon secondarySlot1 = null;
   [SerializeField] SOWeapon currentWeapon = null;
+  [SerializeField] GameObject weaponPlacementParent;
+
+
+
 
 
   private void Awake()
@@ -56,18 +60,25 @@ public class WeaponManager : MonoBehaviour
 
     return equipped;
   }
-
+  /// <summary>
+  /// fires the weapon.
+  /// </summary>
   public void Attack()
   {
+    if (currentWeapon == null) return;
     Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
     RaycastHit hit;
-    if (Physics.Raycast(ray, out hit))
+    if (Physics.Raycast(ray, out hit, currentWeapon.Range))
     {
-      print("Im shooting at " + hit.transform.name);
+      print("Using" + currentWeapon.name + " on " + hit.transform.name);
     }
 
   }
-
+  /// <summary>
+  /// Equip to an open Primary slot checking 1 and then 2 or adding back to list if none are open
+  /// </summary>
+  /// <param name="weapon"></param>
+  /// <returns></returns>
   bool EquipPrimary(SOWeapon weapon)
   {
     weaponInventory.Remove(weapon);
@@ -92,6 +103,10 @@ public class WeaponManager : MonoBehaviour
     }
 
   }
+  /// <summary>
+  /// equip to secondary slot
+  /// </summary>
+  /// <param name="weapon"></param>
   void EquipSecondary(SOWeapon weapon)
   {
     // remove weapon to equip from inventory
@@ -120,11 +135,19 @@ public class WeaponManager : MonoBehaviour
       print("Nothing in primary slot!");
       return;
     }
-
+    if (currentWeapon != null)
+    {
+      AddWeaponToInventory(currentWeapon);
+      currentWeapon = null;
+      UsePrimary();
+    }
     currentWeapon = primarySlot1;
+    primarySlot1 = null;
     print(currentWeapon.name + " is equipped");
-
+    ShowWeapon();
   }
+
+
   public void UseSecondary()
   {
     if (secondarySlot1 == null)
@@ -143,6 +166,20 @@ public class WeaponManager : MonoBehaviour
       currentWeapon = secondarySlot1;
       secondarySlot1 = null;
       print("Using " + currentWeapon.name);
+
+    }
+    ShowWeapon();
+  }
+
+  void ShowWeapon()
+  {
+    if (currentWeapon != null)
+    {
+      Instantiate(currentWeapon.WeaponModel, weaponPlacementParent.transform.position, Quaternion.Euler(0, 0, 0), weaponPlacementParent.transform);
+    }
+    else
+    {
+      return;
     }
   }
 
