@@ -4,14 +4,26 @@ using UnityEngine;
 
 public class WeaponPickUp : MonoBehaviour
 {
-  [SerializeField] SOWeapon PickUp;
+  [SerializeField] SOWeapon pickUp;
+  [SerializeField] ParticleSystem pickupFX;
 
+  private void Start()
+  {
+    Instantiate(pickUp.WeaponModel, transform.position, Quaternion.identity, transform);
+    pickupFX.Play();
+
+  }
+
+  private void Update()
+  {
+    transform.Rotate(1, 1, 1, Space.Self);
+  }
   private void OnTriggerEnter(Collider other)
   {
     if (other.gameObject.tag == "Player")
     {
       WeaponManager playerWM = other.GetComponent<WeaponManager>();
-      playerWM.AddWeaponToInventory(PickUp);
+      playerWM.AddWeaponToInventory(pickUp);
       Destroy(gameObject);
     }
   }
