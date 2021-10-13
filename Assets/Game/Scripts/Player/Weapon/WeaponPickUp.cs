@@ -5,8 +5,11 @@ using UnityEngine;
 public class WeaponPickUp : MonoBehaviour
 {
   [SerializeField] SOWeapon pickUp;
-  [SerializeField] ParticleSystem pickupFX;
-
+  ParticleSystem pickupFX;
+  private void Awake()
+  {
+    pickupFX = GetComponent<ParticleSystem>();
+  }
   private void Start()
   {
     Instantiate(pickUp.WeaponModel, transform.position, Quaternion.identity, transform);
