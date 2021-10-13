@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Player/PlayerMovement_FPS/PlayerControls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Game/Scripts/Player/PlayerMovement_FPS/PlayerControls.inputactions'
 
 using System;
 using System.Collections;
@@ -54,6 +54,30 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": ""Shoot"",
                     ""type"": ""Button"",
                     ""id"": ""e1264ba7-83ca-45de-b2c5-17a0ba24a2f0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""WeaponSlot1"",
+                    ""type"": ""Button"",
+                    ""id"": ""74ec6414-50c0-4f2a-8788-37a7296f9016"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""WeaponSlot2"",
+                    ""type"": ""Button"",
+                    ""id"": ""10d423d7-b32e-4c42-ba6f-89009ca4e9d4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""WeaponSlot3"",
+                    ""type"": ""Button"",
+                    ""id"": ""06cedcf4-cb1b-489f-9303-72e4aa483069"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -158,6 +182,39 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96a3f680-d002-4fd3-beea-f5fb7a8c8a47"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponSlot1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c835ccf0-3162-4852-a5ff-d135b31ed203"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponSlot2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6491b653-8b79-40fd-99b8-3b74eff3c6df"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponSlot3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -171,6 +228,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_GroundMovement_MouseX = m_GroundMovement.FindAction("MouseX", throwIfNotFound: true);
         m_GroundMovement_MouseY = m_GroundMovement.FindAction("MouseY", throwIfNotFound: true);
         m_GroundMovement_Shoot = m_GroundMovement.FindAction("Shoot", throwIfNotFound: true);
+        m_GroundMovement_WeaponSlot1 = m_GroundMovement.FindAction("WeaponSlot1", throwIfNotFound: true);
+        m_GroundMovement_WeaponSlot2 = m_GroundMovement.FindAction("WeaponSlot2", throwIfNotFound: true);
+        m_GroundMovement_WeaponSlot3 = m_GroundMovement.FindAction("WeaponSlot3", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -225,6 +285,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_GroundMovement_MouseX;
     private readonly InputAction m_GroundMovement_MouseY;
     private readonly InputAction m_GroundMovement_Shoot;
+    private readonly InputAction m_GroundMovement_WeaponSlot1;
+    private readonly InputAction m_GroundMovement_WeaponSlot2;
+    private readonly InputAction m_GroundMovement_WeaponSlot3;
     public struct GroundMovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -234,6 +297,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @MouseX => m_Wrapper.m_GroundMovement_MouseX;
         public InputAction @MouseY => m_Wrapper.m_GroundMovement_MouseY;
         public InputAction @Shoot => m_Wrapper.m_GroundMovement_Shoot;
+        public InputAction @WeaponSlot1 => m_Wrapper.m_GroundMovement_WeaponSlot1;
+        public InputAction @WeaponSlot2 => m_Wrapper.m_GroundMovement_WeaponSlot2;
+        public InputAction @WeaponSlot3 => m_Wrapper.m_GroundMovement_WeaponSlot3;
         public InputActionMap Get() { return m_Wrapper.m_GroundMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +324,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Shoot.started -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnShoot;
+                @WeaponSlot1.started -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnWeaponSlot1;
+                @WeaponSlot1.performed -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnWeaponSlot1;
+                @WeaponSlot1.canceled -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnWeaponSlot1;
+                @WeaponSlot2.started -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnWeaponSlot2;
+                @WeaponSlot2.performed -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnWeaponSlot2;
+                @WeaponSlot2.canceled -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnWeaponSlot2;
+                @WeaponSlot3.started -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnWeaponSlot3;
+                @WeaponSlot3.performed -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnWeaponSlot3;
+                @WeaponSlot3.canceled -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnWeaponSlot3;
             }
             m_Wrapper.m_GroundMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -277,6 +352,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @WeaponSlot1.started += instance.OnWeaponSlot1;
+                @WeaponSlot1.performed += instance.OnWeaponSlot1;
+                @WeaponSlot1.canceled += instance.OnWeaponSlot1;
+                @WeaponSlot2.started += instance.OnWeaponSlot2;
+                @WeaponSlot2.performed += instance.OnWeaponSlot2;
+                @WeaponSlot2.canceled += instance.OnWeaponSlot2;
+                @WeaponSlot3.started += instance.OnWeaponSlot3;
+                @WeaponSlot3.performed += instance.OnWeaponSlot3;
+                @WeaponSlot3.canceled += instance.OnWeaponSlot3;
             }
         }
     }
@@ -288,5 +372,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMouseX(InputAction.CallbackContext context);
         void OnMouseY(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnWeaponSlot1(InputAction.CallbackContext context);
+        void OnWeaponSlot2(InputAction.CallbackContext context);
+        void OnWeaponSlot3(InputAction.CallbackContext context);
     }
 }
