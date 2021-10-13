@@ -13,7 +13,7 @@ public class WeaponManager : MonoBehaviour
   [SerializeField] SOWeapon secondarySlot1 = null;
   [SerializeField] SOWeapon currentWeapon = null;
   [SerializeField] GameObject weaponPlacementParent;
-
+  GameObject currentWeaponModel = null;
 
 
 
@@ -30,35 +30,36 @@ public class WeaponManager : MonoBehaviour
   /// <param name="weapon">The weapon to add to the player's inventory</param>
   public void AddWeaponToInventory(SOWeapon weapon)
   {
-    weaponInventory.Add(weapon);
-    if (weapon.WeaponType == WeaponType.Primary)
-    {
-      EquipPrimary(weapon);
-    }
-    else if (weapon.WeaponType == WeaponType.Secondary && secondarySlot1 == null)
-    {
-      EquipSecondary(weapon);
-    }
-
-  }
-
-  public bool EquipWeapon(SOWeapon weapon)
-  {
-    bool equipped = false;
-
+    // weaponInventory.Add(weapon);
     switch (weapon.WeaponType)
     {
       case WeaponType.Primary:
-        equipped = EquipPrimary(weapon);
-
+        if (primarySlot1 == null)
+        {
+          EquipPrimary(weapon);
+        }
+        else if (primarySlot2 = null)
+        {
+          EquipPrimary(weapon, 2);
+        }
+        else
+        {
+          weaponInventory.Add(weapon);
+        }
         break;
       case WeaponType.Secondary:
-        EquipSecondary(weapon);
-        equipped = true;
+        if (secondarySlot1 == null)
+        {
+          EquipSecondary(weapon);
+        }
+        else
+        {
+          weaponInventory.Add(weapon);
+        }
         break;
     }
 
-    return equipped;
+
   }
   /// <summary>
   /// fires the weapon.
@@ -74,41 +75,70 @@ public class WeaponManager : MonoBehaviour
     }
 
   }
+
   /// <summary>
   /// Equip to an open Primary slot checking 1 and then 2 or adding back to list if none are open
   /// </summary>
   /// <param name="weapon"></param>
   /// <returns></returns>
-  bool EquipPrimary(SOWeapon weapon)
+  void EquipPrimary(SOWeapon weapon, int slotNumber = 1)
   {
+    if (!CheckPrimarySlot(slotNumber)) return;
+    if (weapon.WeaponType == WeaponType.Secondary) return;
     weaponInventory.Remove(weapon);
-    if (primarySlot1 == null)
+    switch (slotNumber)
     {
-      primarySlot1 = weapon;
-      print("Equipped to slot 1");
-      return true;
+      case 1:
+        primarySlot1 = weapon;
+        break;
+      case 2:
+        primarySlot2 = weapon;
+        break;
     }
-    else if (primarySlot2 == null)
-    {
-      primarySlot2 = weapon;
-      print("Equipped to slot 2");
 
-      return true;
-    }
-    else
-    {
-      print("All slots full!");
-      weaponInventory.Add(weapon);
-      return false;
-    }
 
   }
+  /// <summary>
+  /// Returns true if slot is empty.
+  /// </summary>
+  /// <param name="slot"> slot to check</param>
+  /// <returns></returns>
+  bool CheckPrimarySlot(int slot = 1)
+  {
+    switch (slot)
+    {
+      case 1:
+        if (primarySlot1 != null)
+        {
+          return false;
+        }
+        else
+        {
+          return true;
+        }
+      case 2:
+        if (primarySlot2 != null)
+        {
+          return false;
+        }
+        else
+        {
+          return true;
+        }
+      default:
+        return false;
+    }
+  }
+
+
   /// <summary>
   /// equip to secondary slot
   /// </summary>
   /// <param name="weapon"></param>
   void EquipSecondary(SOWeapon weapon)
   {
+    //check if its a primary just in case.
+    if (weapon.WeaponType == WeaponType.Primary) return;
     // remove weapon to equip from inventory
     weaponInventory.Remove(weapon);
 
@@ -118,8 +148,6 @@ public class WeaponManager : MonoBehaviour
       weaponInventory.Add(secondarySlot1);
       // swap the weapon out
       secondarySlot1 = weapon;
-
-
     }
     else
     {
@@ -128,23 +156,35 @@ public class WeaponManager : MonoBehaviour
     }
   }
 
-  public void UsePrimary()
+  public void UsePrimary(int slot = 1)
   {
-    if (primarySlot1 == null)
+    if (CheckPrimarySlot(slot)) return; // slot is empty so cant use it.
+
+    if (currentWeapon != null) // There is a weapon in current use.
     {
-      print("Nothing in primary slot!");
-      return;
-    }
-    if (currentWeapon != null)
-    {
+
       AddWeaponToInventory(currentWeapon);
+      Destroy(currentWeaponModel);
+
       currentWeapon = null;
-      UsePrimary();
     }
-    currentWeapon = primarySlot1;
-    primarySlot1 = null;
-    print(currentWeapon.name + " is equipped");
-    ShowWeapon();
+    switch (slot)
+    {
+      case 1:
+        currentWeapon = primarySlot1;
+        primarySlot1 = null;
+        ShowWeapon();
+
+        break;
+      case 2:
+        currentWeapon = primarySlot2;
+        primarySlot2 = null;
+        ShowWeapon();
+        break;
+
+
+    }
+
   }
 
 
@@ -161,7 +201,7 @@ public class WeaponManager : MonoBehaviour
       {
         AddWeaponToInventory(currentWeapon);
         currentWeapon = null;
-        UseSecondary();
+
       }
       currentWeapon = secondarySlot1;
       secondarySlot1 = null;
@@ -175,15 +215,22 @@ public class WeaponManager : MonoBehaviour
   {
     if (currentWeapon != null)
     {
-      Instantiate(currentWeapon.WeaponModel, weaponPlacementParent.transform.position, Quaternion.Euler(0, 0, 0), weaponPlacementParent.transform);
+      if (currentWeaponModel == null)
+      {
+        currentWeaponModel = Instantiate(currentWeapon.WeaponModel, weaponPlacementParent.transform.position, Quaternion.Euler(0, 0, 0), weaponPlacementParent.transform);
+
+      }
+      else
+      {
+        Destroy(currentWeaponModel);
+        currentWeaponModel = Instantiate(currentWeapon.WeaponModel, weaponPlacementParent.transform.position, Quaternion.Euler(0, 0, 0), weaponPlacementParent.transform);
+
+      }
     }
     else
     {
       return;
     }
   }
-
-
-
 
 }
