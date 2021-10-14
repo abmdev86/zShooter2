@@ -19,7 +19,7 @@ public class WeaponPickUp : MonoBehaviour
 
   private void Update()
   {
-    transform.Rotate(1, 1, 1, Space.Self);
+    transform.Rotate(0.2f, 0.2f, 0.2f, Space.Self);
   }
   private void OnTriggerEnter(Collider other)
   {
