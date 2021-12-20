@@ -75,6 +75,7 @@ public class EnemyVisibility : MonoBehaviour
 
   public bool CheckVisibility()
   {
+    
     Vector3 directionToTarget = target.position - transform.position;
     float degreesToTarget = Vector3.Angle(transform.forward, directionToTarget);
     bool withinArc = degreesToTarget < (angle / 2);

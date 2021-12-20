@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
   Spawner spawner;
   [SerializeField] GameObject playerSpawnLocation;
   [SerializeField] GameObject enemySpawnLocation;
-  [SerializeField] Text ammoCountText;
 
 
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,31 +6,58 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
   [SerializeField] int secondaryAmmo;
+  public int SecondaryAmmo
+  {
+    get
+    {
+      return secondaryAmmo;
+    }
+  }
   [SerializeField] int primaryAmmo;
+  public int PrimaryAmmo
+  {
+    get
+    {
+      return primaryAmmo;
+    }
+  }
+
   [SerializeField] List<SOWeapon> weaponInventory;
   [SerializeField] Camera fpsCam;
   [SerializeField] SOWeapon primarySlot1 = null;
   [SerializeField] SOWeapon primarySlot2 = null;
   [SerializeField] SOWeapon secondarySlot1 = null;
   [SerializeField] SOWeapon currentWeapon = null;
+  public SOWeapon CurrentWeapon
+  {
+    get
+    {
+      return currentWeapon;
+    }
+  }
   [SerializeField] GameObject weaponPlacementParent;
+  [SerializeField] LayerMask ignoreLayer;
   GameObject currentWeaponModel = null;
 
 
-
+  UIManager uIManager;
 
   private void Awake()
   {
     weaponInventory = new List<SOWeapon>();
     fpsCam = GetComponentInChildren<Camera>();
+    uIManager = FindObjectOfType<UIManager>();
 
   }
+
+
   /// <summary>
   /// Adds the weapon to the Player's inventory on pickup. Slots the item in the appropriate slot if the slots are null.
   /// </summary>
   /// <param name="weapon">The weapon to add to the player's inventory</param>
   public void AddWeaponToInventory(SOWeapon weapon)
   {
+    weapon.InitWeapon();
     // weaponInventory.Add(weapon);
     switch (weapon.WeaponType)
     {
@@ -67,13 +95,39 @@ public class WeaponManager : MonoBehaviour
   public void Attack()
   {
     if (currentWeapon == null) return;
+    if (currentWeapon.CurrentAmmo == 0)
+    {
+      ReloadWeapon();
+    }
+
     Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
     RaycastHit hit;
-    if (Physics.Raycast(ray, out hit, currentWeapon.Range))
+    if (Physics.Raycast(ray, out hit, currentWeapon.Range, ignoreLayer))
     {
+      if (hit.collider.gameObject.tag == "Hitbox")
+      {
+        ITargetable target = hit.collider.GetComponentInParent<ITargetable>();
+        target.TakeDamage(currentWeapon.Damage, hit.point, hit.normal);
+        Debug.DrawRay(ray.origin, ray.direction, Color.red);
+      }
       print("Using" + currentWeapon.name + " on " + hit.transform.name);
     }
 
+  }
+
+
+  private void ReloadWeapon()
+  {
+    switch (currentWeapon.WeaponType)
+    {
+      case WeaponType.Primary:
+        primaryAmmo -= currentWeapon.MaxAmmo;
+        currentWeapon.Reload(primaryAmmo);
+        break;
+      case WeaponType.Secondary:
+        currentWeapon.Reload(secondaryAmmo);
+        break;
+    }
   }
 
   /// <summary>
@@ -90,6 +144,7 @@ public class WeaponManager : MonoBehaviour
     {
       case 1:
         primarySlot1 = weapon;
+
         break;
       case 2:
         primarySlot2 = weapon;
@@ -217,13 +272,15 @@ public class WeaponManager : MonoBehaviour
     {
       if (currentWeaponModel == null)
       {
-        currentWeaponModel = Instantiate(currentWeapon.WeaponModel, weaponPlacementParent.transform.position, Quaternion.Euler(0, 0, 0), weaponPlacementParent.transform);
+        currentWeaponModel = Instantiate(currentWeapon.WeaponModel, weaponPlacementParent.transform.position, Quaternion.identity, weaponPlacementParent.transform);
+        uIManager.ClipCountText(currentWeapon.CurrentAmmo);
 
       }
       else
       {
         Destroy(currentWeaponModel);
-        currentWeaponModel = Instantiate(currentWeapon.WeaponModel, weaponPlacementParent.transform.position, Quaternion.Euler(0, 0, 0), weaponPlacementParent.transform);
+        currentWeaponModel = Instantiate(currentWeapon.WeaponModel, weaponPlacementParent.transform.position, Quaternion.identity, weaponPlacementParent.transform);
+        uIManager.ClipCountText(currentWeapon.CurrentAmmo);
 
       }
     }

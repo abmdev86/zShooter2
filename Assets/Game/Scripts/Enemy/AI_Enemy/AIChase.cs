@@ -53,12 +53,12 @@ public class AIChase : MonoBehaviour
     CurrentState = AISTATE.PATROL;
   }
 
-  private void Update()
-  {
-    TargetIsVisible = transform.CheckVisibility(player);
-    print(TargetIsVisible);
+  // private void Update()
+  // {
+  //   TargetIsVisible = transform.CheckVisibility(player.transform);
+  //   if (TargetIsVisible) { print(TargetIsVisible); }
 
-  }
+  // }
 
   private void OnTriggerEnter(Collider other)
   {

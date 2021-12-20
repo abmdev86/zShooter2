@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Waypoint
   - Weapon
+  - Hitbox
   layers:
   - Default
   - TransparentFX
