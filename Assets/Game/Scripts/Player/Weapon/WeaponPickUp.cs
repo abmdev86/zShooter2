@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponPickUp : MonoBehaviour
@@ -25,8 +23,9 @@ public class WeaponPickUp : MonoBehaviour
   {
     if (other.gameObject.tag == "Player")
     {
-      WeaponManager playerWM = other.GetComponent<WeaponManager>();
-      playerWM.AddWeaponToInventory(pickUp);
+      // WeaponManager playerWM = other.GetComponent<WeaponManager>();
+      // playerWM.AddWeaponToInventory(pickUp);
+      WeaponManager.Instance.AddWeaponToInventory(pickUp);
       Destroy(gameObject);
     }
   }

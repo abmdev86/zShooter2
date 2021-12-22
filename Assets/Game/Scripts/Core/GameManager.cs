@@ -35,6 +35,7 @@ public class GameManager : Singleton<GameManager>
 
     spawner = Resources.Load("spawner", typeof(Spawner)) as Spawner;
     player = Resources.Load("player", typeof(GameObject)) as GameObject;
+    
     IsPlayerAlive = true;
 
   }
@@ -50,12 +51,14 @@ public class GameManager : Singleton<GameManager>
 
   private void Update()
   {
-    //    print(GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon>().AmmoCount);
+    //  print(GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon>().AmmoCount);
     if (isGameRunning)
     {
 
       spawner.Spawn(1, 5f, enemySpawnLocation, gameObject);
-      UIManager.Instance.AmmoCount = FindObjectOfType<WeaponManager>().CurrentWeapon.CurrentAmmo.ToString();
+
+
+      // UIManager.Instance.AmmoCount = FindObjectOfType<WeaponManager>().CurrentWeapon.CurrentAmmo.ToString();
     }
     print("Player alive: " + IsPlayerAlive);
     print("Game running: " + isGameRunning);

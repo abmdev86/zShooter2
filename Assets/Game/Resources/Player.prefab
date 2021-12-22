@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7792794774627153728}
   m_Layer: 0
   m_Name: CurrentWeapon
-  m_TagString: Untagged
+  m_TagString: WeaponPlacement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -253,7 +253,6 @@ GameObject:
   - component: {fileID: 3696242772430645569}
   - component: {fileID: 3696242772430645566}
   - component: {fileID: -4576494808376571933}
-  - component: {fileID: 6949225986897096900}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -328,7 +327,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: 3696242772430645566}
   mouseLook: {fileID: 3696242772430645568}
-  weapon: {fileID: 0}
 --- !u!114 &3696242772430645566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,30 +360,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   hitEffect: {fileID: 100002, guid: 3b1513bcb86426b4795879be6a128ed7, type: 3}
---- !u!114 &6949225986897096900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3696242772430645565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b25d7abc7fe7e04eaf1691064031db4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  secondaryAmmo: 100
-  primaryAmmo: 100
-  weaponInventory: []
-  fpsCam: {fileID: 0}
-  primarySlot1: {fileID: 0}
-  primarySlot2: {fileID: 0}
-  secondarySlot1: {fileID: 0}
-  currentWeapon: {fileID: 0}
-  weaponPlacementParent: {fileID: 2029334634401301700}
-  ignoreLayer:
-    serializedVersion: 2
-    m_Bits: 4
 --- !u!1 &6736513315805723605
 GameObject:
   m_ObjectHideFlags: 0

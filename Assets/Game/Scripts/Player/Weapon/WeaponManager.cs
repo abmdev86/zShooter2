@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponManager : MonoBehaviour
+
+public class WeaponManager : Singleton<WeaponManager>
 {
   [SerializeField] int secondaryAmmo;
   public int SecondaryAmmo
@@ -38,14 +39,37 @@ public class WeaponManager : MonoBehaviour
   GameObject currentWeaponModel = null;
 
 
-  UIManager uIManager;
+  UIManager _UIManager;
 
   private void Awake()
   {
     weaponInventory = new List<SOWeapon>();
     fpsCam = GetComponentInChildren<Camera>();
-    uIManager = FindObjectOfType<UIManager>();
+    _UIManager = FindObjectOfType<UIManager>();
+    try
+    {
+      weaponPlacementParent = GameObject.FindGameObjectWithTag("WeaponPlacement");
 
+    }
+    catch (MissingReferenceException e)
+    {
+      Debug.LogException(e);
+    }
+    finally
+    {
+      weaponPlacementParent = new GameObject("WeaponPlacementGenerated");
+      Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+      Instantiate(weaponPlacementParent, player, player);
+    }
+
+
+  }
+  private void Update()
+  {
+    if (CurrentWeapon != null)
+    {
+      _UIManager.AmmoCountText(CurrentWeapon.CurrentAmmo);
+    }
   }
 
 
@@ -272,14 +296,14 @@ public class WeaponManager : MonoBehaviour
       if (currentWeaponModel == null)
       {
         currentWeaponModel = Instantiate(currentWeapon.WeaponModel, weaponPlacementParent.transform.position, Quaternion.identity, weaponPlacementParent.transform);
-        uIManager.ClipCountText(currentWeapon.CurrentAmmo);
+        _UIManager.AmmoCountText(currentWeapon.CurrentAmmo);
 
       }
       else
       {
         Destroy(currentWeaponModel);
         currentWeaponModel = Instantiate(currentWeapon.WeaponModel, weaponPlacementParent.transform.position, Quaternion.identity, weaponPlacementParent.transform);
-        uIManager.ClipCountText(currentWeapon.CurrentAmmo);
+        _UIManager.AmmoCountText(currentWeapon.CurrentAmmo);
 
       }
     }

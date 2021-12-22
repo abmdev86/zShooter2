@@ -1,10 +1,11 @@
 
+using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : Singleton<UIManager>
+public  class UIManager : MonoBehaviour
 {
-  Text ammoCountText;
-  public string AmmoCount;
+  [SerializeField] Text ammoCountText;
+  public string AmmoCount = "Default";
 
   private void Awake()
   {
@@ -15,13 +16,8 @@ public class UIManager : Singleton<UIManager>
     }
 
   }
-  private void Update()
-  {
-    ammoCountText.text = AmmoCount;
 
-  }
-
-  public void ClipCountText(int value)
+  public void AmmoCountText(int value)
   {
     ammoCountText.text = value.ToString();
 
