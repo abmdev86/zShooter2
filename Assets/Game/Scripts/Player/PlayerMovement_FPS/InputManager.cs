@@ -5,7 +5,6 @@ public class InputManager : MonoBehaviour
 {
   [SerializeField] Movement movement;
   [SerializeField] MouseLook mouseLook;
-  [SerializeField] Weapon weapon;
   WeaponManager weaponManager;
 
   PlayerControls controls;

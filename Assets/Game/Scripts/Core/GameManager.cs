@@ -1,16 +1,11 @@
 
 using UnityEngine;
-
-
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
 
   Spawner spawner;
   [SerializeField] GameObject playerSpawnLocation;
   [SerializeField] GameObject enemySpawnLocation;
-
-
-
 
   GameObject player;
   [SerializeField]
@@ -55,12 +50,12 @@ public class GameManager : MonoBehaviour
 
   private void Update()
   {
-//    print(GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon>().AmmoCount);
+    //    print(GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon>().AmmoCount);
     if (isGameRunning)
     {
 
       spawner.Spawn(1, 5f, enemySpawnLocation, gameObject);
-    //  ammoCountText.text = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon>().AmmoCount.ToString();
+      UIManager.Instance.AmmoCount = FindObjectOfType<WeaponManager>().CurrentWeapon.CurrentAmmo.ToString();
     }
     print("Player alive: " + IsPlayerAlive);
     print("Game running: " + isGameRunning);

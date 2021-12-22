@@ -1,13 +1,25 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
-  [SerializeField] Text ammoCountText;
+  Text ammoCountText;
+  public string AmmoCount;
 
+  private void Awake()
+  {
+    ammoCountText = FindObjectOfType<Text>();
+    if (ammoCountText == null)
+    {
+      print("missing ammoCountText");
+    }
+
+  }
+  private void Update()
+  {
+    ammoCountText.text = AmmoCount;
+
+  }
 
   public void ClipCountText(int value)
   {

@@ -108,7 +108,8 @@ public class WeaponManager : MonoBehaviour
         target.TakeDamage(currentWeapon.Damage, hit.point, hit.normal);
         Debug.DrawRay(ray.origin, ray.direction, Color.red);
       }
-      print("Using" + currentWeapon.name + " on " + hit.transform.name);
+      currentWeapon.CurrentAmmo -= 1;
+      print(currentWeapon.CurrentAmmo);
     }
 
   }

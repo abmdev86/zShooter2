@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public enum WeaponType
@@ -26,6 +25,10 @@ public class SOWeapon : ScriptableObject
   private int currentAmmo;
   public int CurrentAmmo
   {
+    set{
+
+      currentAmmo = value >= maxAmmo ? maxAmmo : value;
+    }
     get
     {
       return currentAmmo;
@@ -43,6 +46,7 @@ public class SOWeapon : ScriptableObject
     currentAmmo = maxAmmo;
     Debug.Log("Initiating " + WeaponName);
   }
+
 
   public void Reload(int ammoPool)
   {
