@@ -5,7 +5,7 @@ public class InputManager : MonoBehaviour
 {
   [SerializeField] Movement movement;
   [SerializeField] MouseLook mouseLook;
-  WeaponManager weaponManager;
+ // WeaponManager weaponManager;
 
   PlayerControls controls;
   PlayerControls.GroundMovementActions groundMovement;
@@ -13,19 +13,19 @@ public class InputManager : MonoBehaviour
   Vector2 mouseInput;
   private void Awake()
   {
-    weaponManager = GetComponent<WeaponManager>();
+   // weaponManager = GetComponent<WeaponManager>();
     controls = new PlayerControls();
     groundMovement = controls.GroundMovement;
     // groundMovement.[action].performed += context => do something.
     groundMovement.HorizontalMovement.performed += ctx => horizontalInput = ctx.ReadValue<Vector2>();
     groundMovement.Jump.performed += _ => movement.OnJumpPress();
-    groundMovement.WeaponSlot1.performed += _ => weaponManager.UsePrimary();
-    groundMovement.WeaponSlot3.performed += _ => weaponManager.UseSecondary();
+    groundMovement.WeaponSlot1.performed += _ => WeaponManager.Instance.UsePrimary();
+    groundMovement.WeaponSlot3.performed += _ => WeaponManager.Instance.UseSecondary();
 
     groundMovement.MouseX.performed += ctx => mouseInput.x = ctx.ReadValue<float>();
 
     groundMovement.MouseY.performed += ctx => mouseInput.y = ctx.ReadValue<float>();
-    groundMovement.Shoot.performed += _ => weaponManager.Attack();
+    groundMovement.Shoot.performed += _ => WeaponManager.Instance.Attack();
 
   }
   private void Update()
