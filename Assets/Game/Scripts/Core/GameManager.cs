@@ -1,70 +1,44 @@
 
 using UnityEngine;
-public class GameManager : Singleton<GameManager>
+namespace com.sluggaGames.gambit.Core
 {
-
-  Spawner spawner;
-  [SerializeField] GameObject playerSpawnLocation;
-  [SerializeField] GameObject enemySpawnLocation;
-
-  GameObject player;
-  [SerializeField]
-  bool isGameRunning = true;
-  [SerializeField]
-  bool isPlayerAlive;
-  public bool IsPlayerAlive
+  public class GameManager : MonoBehaviour
   {
-    get
+    static GameManager _instance;
+    public static GameManager Instance
     {
-      return isPlayerAlive;
+      get { return _instance; }
     }
-    set
+    bool playerDied = false;
+    public bool PlayerDied
     {
-
-      isPlayerAlive = value;
-      if (value == false)
+      get { return playerDied; }
+      set
       {
-        isGameRunning = false;
+        playerDied = value;
       }
     }
-  }
+    public static int CurrentScene = 0;
+    public static int GameLevel = 3;
+    public static int PlayerLives = 3;
 
-
-  private void Awake()
-  {
-
-    spawner = Resources.Load("spawner", typeof(Spawner)) as Spawner;
-    player = Resources.Load("player", typeof(GameObject)) as GameObject;
-    
-    IsPlayerAlive = true;
-
-  }
-
-  private void Start()
-  {
-    if (spawner != null)
+    private void Awake()
     {
-
-      spawner.SpawnObject(player, playerSpawnLocation.transform.position);
+      CheckForGameManager();
     }
-  }
 
-  private void Update()
-  {
-    //  print(GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon>().AmmoCount);
-    if (isGameRunning)
+    private void CheckForGameManager()
     {
-
-      spawner.Spawn(1, 5f, enemySpawnLocation, gameObject);
-
-
-      // UIManager.Instance.AmmoCount = FindObjectOfType<WeaponManager>().CurrentWeapon.CurrentAmmo.ToString();
+      if (_instance == null)
+      {
+        _instance = this;
+      }
+      else
+      {
+        Destroy(this.gameObject);
+      }
+      DontDestroyOnLoad(this);
     }
-    print("Player alive: " + IsPlayerAlive);
-    print("Game running: " + isGameRunning);
-
 
   }
-
-
 }
