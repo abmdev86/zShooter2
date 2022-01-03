@@ -7,12 +7,10 @@ namespace com.sluggaGames.gambit.Core
   {
     public string CharacterName;
     public GameObject Model;
-    public SOWeapon WeaponSlot1 = null;
-    public SOWeapon WeaponSlot2 = null;
-    public SOWeapon WeaponSlot3 = null;
 
     public float Armor = 30f;
     public float Health = 130f;
+    public float MeleeDamage = 50f;
 
   }
 }
