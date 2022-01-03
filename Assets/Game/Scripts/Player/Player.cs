@@ -1,18 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
+using com.sluggaGames.gambit.Core;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace com.sluggaGames.gambit.PlayerSystem
 {
-    // Start is called before the first frame update
-    void Start()
+  public class Player : MonoBehaviour, ICharacterTemplate
+  {
+    float health;
+
+    public float Health
     {
-        
+      get
+      {
+        return health;
+      }
+      set
+      {
+        health = value;
+      }
+    }
+    float armor;
+    public float Armor
+    {
+      get { return armor; }
+      set { armor = value; }
+    }
+    float meleeDamage;
+    public float MeleeDamage
+    {
+      get { return meleeDamage; }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CharacterStats(SOCharacter character)
     {
-        
+      health = character.Health;
+      armor = character.Armor;
+      meleeDamage = character.MeleeDamage;
+      gameObject.name = character.name;
     }
+  }
 }
