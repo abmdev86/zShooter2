@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6ad3c69e88c2a548bc5da64be96a373, type: 3}
   m_Name: Player_Default
   m_EditorClassIdentifier: 
-  CharacterName: 
-  Model: {fileID: 0}
-  WeaponSlot1: {fileID: 0}
+  CharacterName: Player1
+  Model: {fileID: 3696242772430645565, guid: 5890a7f2b7ab4bf4491b43f95a2f352c, type: 3}
+  WeaponSlot1: {fileID: 11400000, guid: 9be9e8db31cf4e540ba91c365864e250, type: 2}
   WeaponSlot2: {fileID: 0}
-  WeaponSlot3: {fileID: 0}
+  WeaponSlot3: {fileID: 11400000, guid: f1efc21b15230d94d99fd16e5cdf4e49, type: 2}
   Armor: 30
   Health: 130
