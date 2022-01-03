@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace com.sluggaGames.gambit.Core
@@ -14,7 +12,7 @@ namespace com.sluggaGames.gambit.Core
     public SOWeapon WeaponSlot3 = null;
 
     public float Armor = 30f;
-
+    public float Health = 130f;
 
   }
 }
